@@ -2,21 +2,25 @@
 
 #include "GameApplication.hpp"
 #include "GameWindow.hpp"
+#include "D3DRenderer.hpp"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
 
 	EDEN3D::GameApplication game(hInstance);
+	EDEN3D::GameWindow window(game, "GameWindow", 640, 480);
 
-	EDEN3D::GameWindow window1(game, "Main App Window 1");
-	EDEN3D::GameWindow window2(game, "Main App Window 2");
+	EDEN3D::D3DRenderer renderer(window, {
+		D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f)
+	});
+	
+	int exit = game.run([&renderer]() {
 
-	//EDEN3D::D3DRenderer(window1);
-
-	game.run([]() {
-
-		// update - animate
-		// renderer.render(scene, camera);
+		// TODO: Detect user input
+		// TODO: Update and animate scene objects
+		renderer.render();
 	});
 
-	return ERROR_SUCCESS;
+	// Clean up stuff
+
+	return exit;
 }

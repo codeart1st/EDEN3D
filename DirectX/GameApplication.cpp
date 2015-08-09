@@ -13,7 +13,6 @@ namespace EDEN3D {
 		wc.lpfnWndProc = WndProc;
 		wc.hInstance = this->hInstance;
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-		wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 		wc.lpszClassName = this->wcName;
 
 		RegisterClassEx(&wc);
@@ -21,17 +20,11 @@ namespace EDEN3D {
 
 	LRESULT CALLBACK GameApplication::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
-		switch (message) {
-			case WM_CLOSE:
-				DestroyWindow(hwnd);
-				break;
-			case WM_DESTROY:
-				//PostQuitMessage(0);
-				break;
-			default:
-				return DefWindowProc(hwnd, message, wParam, lParam);
+		if (message == WM_DESTROY) {
+			PostQuitMessage(0);
+			return 0;
 		}
 
-		return 0;
+		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
 }

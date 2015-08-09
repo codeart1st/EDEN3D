@@ -143,6 +143,10 @@
     <ClInclude Include="D3DRenderer.hpp" />
     <ClInclude Include="GameApplication.hpp" />
     <ClInclude Include="GameWindow.hpp" />
+    <ClInclude Include="Renderer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

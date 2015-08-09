@@ -44,5 +44,13 @@
     <ClInclude Include="GameApplication.hpp">
       <Filter>Headerdateien\EDEN3D</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders.shader">
+      <Filter>Quelldateien</Filter>
+    </None>
   </ItemGroup>
 </Project>

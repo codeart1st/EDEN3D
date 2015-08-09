@@ -13,17 +13,23 @@ namespace EDEN3D {
 	public:
 		GameApplication(const HINSTANCE&);
 
-		template<typename Func> void run(const Func& func) {
+		template<typename Func> int run(const Func& func) {
 
 			MSG msg;
 
-			while (GetMessage(&msg, NULL, 0, 0)) {
+			while (TRUE) {
 
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 
-				func();
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+
+					if (msg.message == WM_QUIT) break;
+
+				} else func();
 			}
+
+			return msg.wParam;
 		};
 
 	protected:

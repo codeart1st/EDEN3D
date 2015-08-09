@@ -4,9 +4,18 @@ namespace EDEN3D {
 
 	GameWindow::GameWindow(GameApplication& app, LPCSTR title, const int width, const int height) {
 
-		int centerX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2;
-		int centerY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
-		hWnd = CreateWindowEx(NULL, app.wcName, title, WS_OVERLAPPEDWINDOW, centerX, centerY, width, height, NULL, NULL, app.hInstance, NULL);
+		this->width = width;
+		this->height = height;
+
+		int centerX = (GetSystemMetrics(SM_CXSCREEN) - this->width) / 2;
+		int centerY = (GetSystemMetrics(SM_CYSCREEN) - this->height) / 2;
+
+		DWORD dwStyle = WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX;
+		RECT rect = { 0, 0, this->width, this->height };
+
+		AdjustWindowRect(&rect, dwStyle, FALSE);
+
+		hWnd = CreateWindowEx(NULL, app.wcName, title, dwStyle, centerX, centerY, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, app.hInstance, NULL);
 
 		ShowWindow(hWnd, SW_SHOW);
 	}
