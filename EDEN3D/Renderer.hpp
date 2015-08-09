@@ -1,8 +1,10 @@
 #pragma once
 
+#include "stdafx.h"
+
 namespace EDEN3D {
 
-	class Renderer {
+	class EDEN3D_API Renderer {
 
 	public:
 		Renderer() {};

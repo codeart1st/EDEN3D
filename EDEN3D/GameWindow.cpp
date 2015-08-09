@@ -1,8 +1,9 @@
+#include "stdafx.h"
 #include "GameWindow.hpp"
 
 namespace EDEN3D {
 
-	GameWindow::GameWindow(GameApplication& app, LPCSTR title, const int width, const int height) {
+	GameWindow::GameWindow(GameApplication& app, LPCWSTR title, const int width, const int height) {
 
 		this->width = width;
 		this->height = height;

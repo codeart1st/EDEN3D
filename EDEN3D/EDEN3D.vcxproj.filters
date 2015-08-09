@@ -14,16 +14,30 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Quelldateien\EDEN3D">
-      <UniqueIdentifier>{b66ca5e2-be54-4023-8ed5-7085df2b874b}</UniqueIdentifier>
+      <UniqueIdentifier>{e5d3b33e-2d37-4640-9aa5-70f892e350c0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\EDEN3D">
-      <UniqueIdentifier>{0ff0b2e2-4f44-4c87-b482-0106b95f3106}</UniqueIdentifier>
+      <UniqueIdentifier>{116a439a-4fac-41de-978f-6fd876dec814}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
+    <ClInclude Include="stdafx.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DRenderer.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+    <ClInclude Include="GameApplication.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWindow.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="D3DRenderer.cpp">
       <Filter>Quelldateien\EDEN3D</Filter>
     </ClCompile>
@@ -33,24 +47,11 @@
     <ClCompile Include="GameWindow.cpp">
       <Filter>Quelldateien\EDEN3D</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GameWindow.hpp">
-      <Filter>Headerdateien\EDEN3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DRenderer.hpp">
-      <Filter>Headerdateien\EDEN3D</Filter>
-    </ClInclude>
-    <ClInclude Include="GameApplication.hpp">
-      <Filter>Headerdateien\EDEN3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.hpp">
-      <Filter>Headerdateien\EDEN3D</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders.shader">
+    <ClCompile Include="dllmain.c">
       <Filter>Quelldateien</Filter>
-    </None>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

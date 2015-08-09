@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "D3DRenderer.hpp"
 
 namespace EDEN3D {
@@ -49,8 +50,8 @@ namespace EDEN3D {
 
 		// load and compile the two shaders
 		ID3D10Blob *VS, *PS;
-		D3DX11CompileFromFile("shaders.shader", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &VS, 0, 0);
-		D3DX11CompileFromFile("shaders.shader", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &PS, 0, 0);
+		D3DX11CompileFromFile(L"shaders.shader", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &VS, 0, 0);
+		D3DX11CompileFromFile(L"shaders.shader", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &PS, 0, 0);
 
 		// encapsulate both shaders into shader objects
 		dev->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &pVS);

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{8a02cd01-09ba-4d8c-b2d6-2efebbe3683f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{d3380e77-ab0c-4a6d-b425-89d1c75d6b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{130a6e2d-add3-487c-866c-1e413bc9b885}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders.shader">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+  </ItemGroup>
+</Project>

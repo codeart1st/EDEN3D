@@ -1,12 +1,10 @@
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
+#include "stdafx.h"
 
 namespace EDEN3D {
 
-	class GameApplication {
+	class EDEN3D_API GameApplication {
 
 	friend class GameWindow;
 
@@ -38,6 +36,6 @@ namespace EDEN3D {
 	private:
 		static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 		HINSTANCE hInstance;
-		LPCSTR wcName;
+		LPCWSTR wcName;
 	};
 }

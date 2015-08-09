@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "GameApplication.hpp"
 
 namespace EDEN3D {
@@ -5,7 +6,7 @@ namespace EDEN3D {
 	GameApplication::GameApplication(const HINSTANCE& hInstance) {
 
 		this->hInstance = hInstance;
-		this->wcName = "WindowClass";
+		this->wcName = L"WindowClass";
 
 		wc = { 0 };
 		wc.cbSize = sizeof(WNDCLASSEX);

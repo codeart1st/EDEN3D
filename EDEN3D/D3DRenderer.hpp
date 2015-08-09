@@ -4,6 +4,8 @@
 #include <d3dx11.h>
 #include <d3dx10.h>
 
+#include "stdafx.h"
+
 #include "GameWindow.hpp"
 #include "Renderer.hpp"
 
@@ -13,16 +15,16 @@
 
 namespace EDEN3D {
 
-	struct RendererOptions {
+	struct EDEN3D_API RendererOptions {
 		FLOAT* clearColor;
 	};
 
-	struct VERTEX {
+	struct EDEN3D_API VERTEX {
 		FLOAT X, Y, Z;
 		D3DXCOLOR Color;
 	};
 
-	class D3DRenderer : public Renderer {
+	class EDEN3D_API D3DRenderer : public Renderer {
 
 	public:
 		D3DRenderer(const GameWindow&, const RendererOptions&);
