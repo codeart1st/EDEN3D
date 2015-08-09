@@ -1,6 +1,10 @@
 #pragma once
 
+#include <d3d11.h>
+
 #include "stdafx.h"
+
+#pragma comment (lib, "d3d11.lib")
 
 namespace EDEN3D {
 
@@ -9,7 +13,8 @@ namespace EDEN3D {
 	friend class GameWindow;
 
 	public:
-		GameApplication(const HINSTANCE&);
+		GameApplication(const HINSTANCE&, LPCWSTR = NULL);
+		~GameApplication();
 
 		template<typename Func> int run(const Func& func) {
 
@@ -30,11 +35,16 @@ namespace EDEN3D {
 			return msg.wParam;
 		};
 
+		static ID3D11Device* dev;
+		static ID3D11DeviceContext* devcon;
+
 	protected:
 		WNDCLASSEX wc;
 
 	private:
 		static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+		static int counter;
+
 		HINSTANCE hInstance;
 		LPCWSTR wcName;
 	};

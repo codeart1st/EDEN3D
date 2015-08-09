@@ -2,7 +2,14 @@
 
 #include "stdafx.h"
 
+#include "Camera.hpp"
+#include "Triangle.hpp"
+
 namespace EDEN3D {
+
+	struct EDEN3D_API RendererOptions {
+		FLOAT* clearColor;
+	};
 
 	class Renderer {
 
@@ -10,6 +17,6 @@ namespace EDEN3D {
 		Renderer() {};
 		virtual ~Renderer() {};
 
-		virtual void render() = 0;
+		virtual void render(const Camera&, Triangle&) = 0;
 	};
 }

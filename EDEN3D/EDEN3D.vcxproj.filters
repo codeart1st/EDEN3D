@@ -24,9 +24,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="D3DRenderer.hpp">
-      <Filter>Headerdateien\EDEN3D</Filter>
-    </ClInclude>
     <ClInclude Include="GameApplication.hpp">
       <Filter>Headerdateien\EDEN3D</Filter>
     </ClInclude>
@@ -36,20 +33,26 @@
     <ClInclude Include="Renderer.hpp">
       <Filter>Headerdateien\EDEN3D</Filter>
     </ClInclude>
-    <ClInclude Include="PerspectiveCamera.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Object3D.hpp">
       <Filter>Headerdateien\EDEN3D</Filter>
     </ClInclude>
     <ClInclude Include="Camera.hpp">
       <Filter>Headerdateien\EDEN3D</Filter>
     </ClInclude>
+    <ClInclude Include="PerspectiveCamera.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+    <ClInclude Include="OrthographicCamera.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultRenderer.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D3DRenderer.cpp">
-      <Filter>Quelldateien\EDEN3D</Filter>
-    </ClCompile>
     <ClCompile Include="GameApplication.cpp">
       <Filter>Quelldateien\EDEN3D</Filter>
     </ClCompile>
@@ -62,10 +65,19 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="PerspectiveCamera.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Object3D.cpp">
+      <Filter>Quelldateien\EDEN3D</Filter>
+    </ClCompile>
+    <ClCompile Include="PerspectiveCamera.cpp">
+      <Filter>Quelldateien\EDEN3D</Filter>
+    </ClCompile>
+    <ClCompile Include="OrthographicCamera.cpp">
+      <Filter>Quelldateien\EDEN3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Quelldateien\EDEN3D</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultRenderer.cpp">
       <Filter>Quelldateien\EDEN3D</Filter>
     </ClCompile>
   </ItemGroup>

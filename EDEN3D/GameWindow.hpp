@@ -7,12 +7,10 @@ namespace EDEN3D {
 
 	class EDEN3D_API GameWindow {
 
-	friend class D3DRenderer;
+	friend class DefaultRenderer;
 
 	public:
-		GameWindow(GameApplication&, LPCWSTR, const int = 640, const int = 480, LPWSTR = NULL);
-
-		void setIcon(LPWSTR);
+		GameWindow(GameApplication&, LPCWSTR = title, const int = 640, const int = 480);
 
 		const int& getWidth() const { return width; };
 		const int& getHeight() const { return height; };
@@ -21,5 +19,8 @@ namespace EDEN3D {
 		HWND hWnd;
 		int width;
 		int height;
+		bool inUse;
+
+		static LPCWSTR title;
 	};
 }

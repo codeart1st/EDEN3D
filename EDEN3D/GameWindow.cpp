@@ -3,10 +3,13 @@
 
 namespace EDEN3D {
 
-	GameWindow::GameWindow(GameApplication& app, LPCWSTR title, const int width, const int height, LPWSTR iconPath) {
+	LPCWSTR GameWindow::title = L"GameWindow";
+
+	GameWindow::GameWindow(GameApplication& app, LPCWSTR title, const int width, const int height) {
 
 		this->width = width;
 		this->height = height;
+		this->inUse = false;
 
 		int centerX = (GetSystemMetrics(SM_CXSCREEN) - this->width) / 2;
 		int centerY = (GetSystemMetrics(SM_CYSCREEN) - this->height) / 2;
@@ -19,18 +22,5 @@ namespace EDEN3D {
 		hWnd = CreateWindowEx(NULL, app.wcName, title, dwStyle, centerX, centerY, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, app.hInstance, NULL);
 
 		ShowWindow(hWnd, SW_SHOW);
-		setIcon(iconPath);
-	}
-
-	void GameWindow::setIcon(LPWSTR iconPath) {
-
-		HANDLE hIcon = LoadImage(0, iconPath, IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
-
-		if (hIcon) {
-			SendMessage(hWnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(hIcon));
-			SendMessage(hWnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(hIcon));
-			SendMessage(GetWindow(hWnd, GW_OWNER), WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(hIcon));
-			SendMessage(GetWindow(hWnd, GW_OWNER), WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(hIcon));
-		}
 	}
 }

@@ -83,16 +83,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="D3DRenderer.hpp" />
+    <ClInclude Include="DefaultRenderer.hpp" />
     <ClInclude Include="GameApplication.hpp" />
     <ClInclude Include="GameWindow.hpp" />
     <ClInclude Include="Object3D.hpp" />
+    <ClInclude Include="OrthographicCamera.hpp" />
     <ClInclude Include="PerspectiveCamera.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Triangle.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D3DRenderer.cpp" />
+    <ClCompile Include="DefaultRenderer.cpp" />
     <ClCompile Include="dllmain.c">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -104,11 +106,13 @@
     <ClCompile Include="GameApplication.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Object3D.cpp" />
+    <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="PerspectiveCamera.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,7 +4,7 @@
 
 namespace EDEN3D {
 
-	class Object3D {
+	class EDEN3D_API Object3D {
 
 	public:
 		Object3D();
