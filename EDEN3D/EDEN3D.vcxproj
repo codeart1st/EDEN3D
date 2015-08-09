@@ -82,9 +82,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.hpp" />
     <ClInclude Include="D3DRenderer.hpp" />
     <ClInclude Include="GameApplication.hpp" />
     <ClInclude Include="GameWindow.hpp" />
+    <ClInclude Include="Object3D.hpp" />
+    <ClInclude Include="PerspectiveCamera.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
@@ -100,6 +103,8 @@
     </ClCompile>
     <ClCompile Include="GameApplication.cpp" />
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="Object3D.cpp" />
+    <ClCompile Include="PerspectiveCamera.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

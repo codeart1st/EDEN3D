@@ -1,6 +1,3 @@
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-
 #include "GameApplication.hpp"
 #include "GameWindow.hpp"
 #include "D3DRenderer.hpp"
@@ -8,7 +5,7 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
 
 	EDEN3D::GameApplication game(hInstance);
-	EDEN3D::GameWindow window(game, L"GameWindow", 640, 480);
+	EDEN3D::GameWindow window(game, L"GameWindow", 640, 480, L"Game.ico");
 
 	EDEN3D::D3DRenderer renderer(window, {
 		D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f)

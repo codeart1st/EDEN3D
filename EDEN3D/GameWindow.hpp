@@ -10,7 +10,9 @@ namespace EDEN3D {
 	friend class D3DRenderer;
 
 	public:
-		GameWindow(GameApplication&, LPCWSTR, const int = 640, const int = 480);
+		GameWindow(GameApplication&, LPCWSTR, const int = 640, const int = 480, LPWSTR = NULL);
+
+		void setIcon(LPWSTR);
 
 		const int& getWidth() const { return width; };
 		const int& getHeight() const { return height; };

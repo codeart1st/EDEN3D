@@ -4,7 +4,7 @@
 
 namespace EDEN3D {
 
-	class EDEN3D_API Renderer {
+	class Renderer {
 
 	public:
 		Renderer() {};

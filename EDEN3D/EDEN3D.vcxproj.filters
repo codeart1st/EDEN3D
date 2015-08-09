@@ -36,6 +36,15 @@
     <ClInclude Include="Renderer.hpp">
       <Filter>Headerdateien\EDEN3D</Filter>
     </ClInclude>
+    <ClInclude Include="PerspectiveCamera.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3DRenderer.cpp">
@@ -52,6 +61,12 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="PerspectiveCamera.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>Quelldateien\EDEN3D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

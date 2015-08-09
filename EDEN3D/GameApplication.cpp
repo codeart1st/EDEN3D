@@ -13,6 +13,7 @@ namespace EDEN3D {
 		wc.style = CS_HREDRAW | CS_VREDRAW;
 		wc.lpfnWndProc = WndProc;
 		wc.hInstance = this->hInstance;
+		wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 		wc.lpszClassName = this->wcName;
 
