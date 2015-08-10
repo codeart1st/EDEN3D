@@ -22,8 +22,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Game.ico">
-      <Filter>Ressourcendateien</Filter>
-    </Image>
+    <Image Include="directx.ico" />
   </ItemGroup>
 </Project>

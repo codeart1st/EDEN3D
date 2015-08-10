@@ -1,9 +1,6 @@
 #pragma once
-#include "Camera.hpp"
-#pragma once
 
-#include "stdafx.h"
-
+#include "EDEN3D.hpp"
 #include "Camera.hpp"
 
 namespace EDEN3D {

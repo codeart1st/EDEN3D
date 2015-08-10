@@ -6,7 +6,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
 
-	EDEN3D::GameApplication game(hInstance, L"Game.ico");
+	EDEN3D::GameApplication game(hInstance, L"directx.ico");
 
 	EDEN3D::PerspectiveCamera camera1;
 	EDEN3D::PerspectiveCamera camera2;

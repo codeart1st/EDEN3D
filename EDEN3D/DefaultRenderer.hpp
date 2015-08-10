@@ -4,7 +4,7 @@
 #include <d3dx11.h>
 #include <d3dx10.h>
 
-#include "stdafx.h"
+#include "EDEN3D.hpp"
 
 #include "GameWindow.hpp"
 #include "Renderer.hpp"

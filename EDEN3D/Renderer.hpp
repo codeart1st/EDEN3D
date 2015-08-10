@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"
+#include "EDEN3D.hpp"
 
 #include "Camera.hpp"
 #include "Triangle.hpp"

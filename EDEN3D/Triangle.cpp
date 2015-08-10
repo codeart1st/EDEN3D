@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "EDEN3D.hpp"
 #include "Triangle.hpp"
 
 #include "DefaultRenderer.hpp"
@@ -22,13 +22,13 @@ namespace EDEN3D {
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;       // use as a vertex buffer
 		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;    // allow CPU to write in buffer
 
-		GameApplication::dev->CreateBuffer(&bd, NULL, &pVBuffer);       // create the buffer
+		GameApplication::device->CreateBuffer(&bd, NULL, &pVBuffer);       // create the buffer
 
 		// copy the vertices into the buffer
 		D3D11_MAPPED_SUBRESOURCE ms;
-		GameApplication::devcon->Map(pVBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);
+		GameApplication::context->Map(pVBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);
 		memcpy(ms.pData, OurVertices, sizeof(VERTEX) * 3);
-		GameApplication::devcon->Unmap(pVBuffer, NULL);
+		GameApplication::context->Unmap(pVBuffer, NULL);
 	}
 
 	void Triangle::render() {
@@ -36,13 +36,13 @@ namespace EDEN3D {
 		// select which vertex buffer to display
 		UINT stride = sizeof(VERTEX);
 		UINT offset = 0;
-		GameApplication::devcon->IASetVertexBuffers(0, 1, &pVBuffer, &stride, &offset);
+		GameApplication::context->IASetVertexBuffers(0, 1, &pVBuffer, &stride, &offset);
 
 		// select which primtive type we are using
-		GameApplication::devcon->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		GameApplication::context->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// draw the vertex buffer to the back buffer
-		GameApplication::devcon->Draw(3, 0);
+		GameApplication::context->Draw(3, 0);
 	}
 
 	Triangle::~Triangle() {

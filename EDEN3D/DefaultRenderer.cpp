@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "EDEN3D.hpp"
 #include "DefaultRenderer.hpp"
 #include "GameApplication.hpp"
 
@@ -38,11 +38,11 @@ namespace EDEN3D {
 		IDXGIAdapter* adapter = NULL;
 		IDXGIFactory1* factory = 0;
 
-		GameApplication::dev->QueryInterface(&device);
+		GameApplication::device->QueryInterface(&device);
 		device->GetAdapter(&adapter);
 		adapter->GetParent(IID_PPV_ARGS(&factory));
 
-		factory->CreateSwapChain(GameApplication::dev, &scd, &swapchain);
+		factory->CreateSwapChain(GameApplication::device, &scd, &swapchain);
 
 		// Set the viewport
 		D3D11_VIEWPORT viewport = { 0 };
@@ -52,7 +52,7 @@ namespace EDEN3D {
 		viewport.Width = window.getWidth();
 		viewport.Height = window.getHeight();
 
-		GameApplication::devcon->RSSetViewports(1, &viewport);
+		GameApplication::context->RSSetViewports(1, &viewport);
 
 		InitPipeline();
 	}
@@ -76,8 +76,8 @@ namespace EDEN3D {
 		D3DX11CompileFromFile(L"shaders.shader", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &PS, 0, 0);
 
 		// encapsulate both shaders into shader objects
-		GameApplication::dev->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &pVS);
-		GameApplication::dev->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &pPS);
+		GameApplication::device->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &pVS);
+		GameApplication::device->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &pPS);
 
 		// create the input layout object
 		D3D11_INPUT_ELEMENT_DESC ied[] =
@@ -86,28 +86,28 @@ namespace EDEN3D {
 			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 
-		GameApplication::dev->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &pLayout);
-		GameApplication::devcon->IASetInputLayout(pLayout);
+		GameApplication::device->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &pLayout);
+		GameApplication::context->IASetInputLayout(pLayout);
 	}
 
 	void DefaultRenderer::render(const Camera& camera, Triangle& tri) {
 
 		// set the shader objects
-		GameApplication::devcon->VSSetShader(pVS, 0, 0);
-		GameApplication::devcon->PSSetShader(pPS, 0, 0);
+		GameApplication::context->VSSetShader(pVS, 0, 0);
+		GameApplication::context->PSSetShader(pPS, 0, 0);
 
 		// get the address of the back buffer
 		ID3D11Texture2D *pBackBuffer;
 		swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
 		// use the back buffer address to create the render target
-		GameApplication::dev->CreateRenderTargetView(pBackBuffer, NULL, &backbuffer);
+		GameApplication::device->CreateRenderTargetView(pBackBuffer, NULL, &backbuffer);
 		pBackBuffer->Release();
 
 		// set the render target as the back buffer
-		GameApplication::devcon->OMSetRenderTargets(1, &backbuffer, NULL);
+		GameApplication::context->OMSetRenderTargets(1, &backbuffer, NULL);
 
-		GameApplication::devcon->ClearRenderTargetView(backbuffer, options.clearColor);
+		GameApplication::context->ClearRenderTargetView(backbuffer, options.clearColor);
 
 		tri.render();
 

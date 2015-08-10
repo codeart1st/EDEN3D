@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="GameApplication.hpp">
       <Filter>Headerdateien\EDEN3D</Filter>
     </ClInclude>
@@ -51,6 +48,9 @@
     <ClInclude Include="DefaultRenderer.hpp">
       <Filter>Headerdateien\EDEN3D</Filter>
     </ClInclude>
+    <ClInclude Include="EDEN3D.hpp">
+      <Filter>Headerdateien\EDEN3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApplication.cpp">
@@ -58,12 +58,6 @@
     </ClCompile>
     <ClCompile Include="GameWindow.cpp">
       <Filter>Quelldateien\EDEN3D</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.c">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Object3D.cpp">
       <Filter>Quelldateien\EDEN3D</Filter>
@@ -79,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="DefaultRenderer.cpp">
       <Filter>Quelldateien\EDEN3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

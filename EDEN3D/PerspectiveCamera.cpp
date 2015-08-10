@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "EDEN3D.hpp"
 #include "PerspectiveCamera.hpp"
 
 namespace EDEN3D {

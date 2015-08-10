@@ -1,8 +1,8 @@
 #pragma once
 
-#include <d3d11.h>
+#include <D3D11.h>
 
-#include "stdafx.h"
+#include "EDEN3D.hpp"
 
 #pragma comment (lib, "d3d11.lib")
 
@@ -15,6 +15,8 @@ namespace EDEN3D {
 	public:
 		GameApplication(const HINSTANCE&, LPCWSTR = NULL);
 		~GameApplication();
+
+		void GetDeviceInfo();
 
 		template<typename Func> int run(const Func& func) {
 
@@ -35,8 +37,8 @@ namespace EDEN3D {
 			return msg.wParam;
 		};
 
-		static ID3D11Device* dev;
-		static ID3D11DeviceContext* devcon;
+		static ID3D11Device* device;
+		static ID3D11DeviceContext* context;
 
 	protected:
 		WNDCLASSEX wc;

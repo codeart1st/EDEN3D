@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"
+#include "EDEN3D.hpp"
 
 #include <d3d11.h>
 #include <d3dx11.h>
