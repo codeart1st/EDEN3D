@@ -1,10 +1,6 @@
 #pragma once
 
-#include <D3D11.h>
-
 #include "EDEN3D.hpp"
-
-#pragma comment (lib, "d3d11.lib")
 
 namespace EDEN3D {
 
@@ -13,7 +9,7 @@ namespace EDEN3D {
 	friend class GameWindow;
 
 	public:
-		GameApplication(const HINSTANCE&, LPCWSTR = NULL);
+		GameApplication(const HINSTANCE&, wstring = NULL);
 		~GameApplication();
 
 		void GetDeviceInfo();

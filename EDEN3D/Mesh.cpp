@@ -1,18 +1,18 @@
-#include "EDEN3D.hpp"
-#include "Triangle.hpp"
+#pragma comment (lib, "d3d11.lib")
 
-#include "DefaultRenderer.hpp"
+#include "GameApplication.hpp"
+#include "Mesh.hpp"
 
 namespace EDEN3D {
 
-	Triangle::Triangle() {
+	Mesh::Mesh(vector<XMFLOAT3>& vertices, vector<XMFLOAT3>& indices) {
 
 		pVBuffer = NULL;
 
 		OurVertices = new VERTEX[3] {
-			{ D3DXVECTOR3(0.0f, 0.5f, 0.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f) },
-			{ D3DXVECTOR3(0.45f, -0.5, 0.0f), D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f) },
-			{ D3DXVECTOR3(-0.45f, -0.5f, 0.0f), D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f) }
+			{ XMFLOAT3(0.0f, 0.5f, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) },
+			{ XMFLOAT3(0.45f, -0.5, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f) },
+			{ XMFLOAT3(-0.45f, -0.5f, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f) }
 		};
 
 		D3D11_BUFFER_DESC bd = { 0 };
@@ -31,7 +31,7 @@ namespace EDEN3D {
 		GameApplication::context->Unmap(pVBuffer, NULL);
 	}
 
-	void Triangle::render() {
+	void Mesh::render() {
 
 		// select which vertex buffer to display
 		UINT stride = sizeof(VERTEX);
@@ -45,7 +45,7 @@ namespace EDEN3D {
 		GameApplication::context->Draw(3, 0);
 	}
 
-	Triangle::~Triangle() {
+	Mesh::~Mesh() {
 
 		delete[] OurVertices;
 		if (pVBuffer) {

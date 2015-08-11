@@ -1,12 +1,11 @@
 #pragma once
 
 #include "EDEN3D.hpp"
-
 #include "Object3D.hpp"
 
 namespace EDEN3D {
 
-	class Camera : public Object3D {
+	class EDEN3D_API Camera : public Object3D {
 
 	public:
 		Camera() {};

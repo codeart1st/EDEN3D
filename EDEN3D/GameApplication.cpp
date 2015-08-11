@@ -1,4 +1,5 @@
-#include "EDEN3D.hpp"
+#pragma comment (lib, "d3d11.lib")
+
 #include "GameApplication.hpp"
 
 #include <vector>
@@ -12,7 +13,7 @@ namespace EDEN3D {
 	ID3D11Device* GameApplication::device = NULL;
 	ID3D11DeviceContext* GameApplication::context = NULL;
 
-	GameApplication::GameApplication(const HINSTANCE& hInstance, LPCWSTR iconPath) {
+	GameApplication::GameApplication(const HINSTANCE& hInstance, wstring iconPath) {
 
 		if (counter > 0) {
 
@@ -38,7 +39,7 @@ namespace EDEN3D {
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 		wc.lpszClassName = this->wcName;
 
-		HANDLE hIcon = LoadImage(0, iconPath, IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
+		HANDLE hIcon = LoadImage(0, iconPath.c_str(), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
 
 		if (hIcon) {
 			wc.hIcon = reinterpret_cast<HICON>(hIcon);

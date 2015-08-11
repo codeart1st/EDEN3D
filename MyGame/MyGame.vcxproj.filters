@@ -17,11 +17,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders.shader">
+    <FxCompile Include="Shaders.shader">
       <Filter>Ressourcendateien</Filter>
-    </None>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="directx.ico" />
+    <Image Include="game.ico">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
 </Project>

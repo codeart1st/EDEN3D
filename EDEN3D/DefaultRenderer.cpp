@@ -1,6 +1,7 @@
-#include "EDEN3D.hpp"
+#pragma comment (lib, "d3d11.lib")
+#pragma comment (lib, "d3dx11.lib")
+
 #include "DefaultRenderer.hpp"
-#include "GameApplication.hpp"
 
 namespace EDEN3D {
 
@@ -30,7 +31,7 @@ namespace EDEN3D {
 		scd.BufferDesc.Height = window.getHeight();
 		scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		scd.OutputWindow = window.hWnd;
-		scd.SampleDesc.Count = 4;
+		scd.SampleDesc.Count = 1;
 		scd.Windowed = TRUE;
 		scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
@@ -88,13 +89,6 @@ namespace EDEN3D {
 
 		GameApplication::device->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &pLayout);
 		GameApplication::context->IASetInputLayout(pLayout);
-	}
-
-	void DefaultRenderer::render(const Camera& camera, Triangle& tri) {
-
-		// set the shader objects
-		GameApplication::context->VSSetShader(pVS, 0, 0);
-		GameApplication::context->PSSetShader(pPS, 0, 0);
 
 		// get the address of the back buffer
 		ID3D11Texture2D *pBackBuffer;
@@ -103,11 +97,25 @@ namespace EDEN3D {
 		// use the back buffer address to create the render target
 		GameApplication::device->CreateRenderTargetView(pBackBuffer, NULL, &backbuffer);
 		pBackBuffer->Release();
+	}
 
+	void DefaultRenderer::render(const Camera& camera, Mesh& tri) {
+
+		// set the shader objects
+		GameApplication::context->VSSetShader(pVS, 0, 0);
+		GameApplication::context->PSSetShader(pPS, 0, 0);
+		
 		// set the render target as the back buffer
 		GameApplication::context->OMSetRenderTargets(1, &backbuffer, NULL);
 
-		GameApplication::context->ClearRenderTargetView(backbuffer, options.clearColor);
+		FLOAT color[4] = {
+			options.clearColor.r,
+			options.clearColor.g,
+			options.clearColor.b,
+			options.clearColor.a
+		};
+
+		GameApplication::context->ClearRenderTargetView(backbuffer, color);
 
 		tri.render();
 

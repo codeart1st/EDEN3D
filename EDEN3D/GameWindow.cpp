@@ -1,11 +1,10 @@
-#include "EDEN3D.hpp"
 #include "GameWindow.hpp"
 
 namespace EDEN3D {
 
-	LPCWSTR GameWindow::title = L"GameWindow";
+	wstring GameWindow::title(L"GameWindow");
 
-	GameWindow::GameWindow(GameApplication& app, LPCWSTR title, const int width, const int height) {
+	GameWindow::GameWindow(GameApplication& app, wstring title, const unsigned int width, const unsigned int height) {
 
 		this->width = width;
 		this->height = height;
@@ -19,7 +18,7 @@ namespace EDEN3D {
 
 		AdjustWindowRect(&rect, dwStyle, FALSE);
 
-		hWnd = CreateWindowEx(NULL, app.wcName, title, dwStyle, centerX, centerY, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, app.hInstance, NULL);
+		hWnd = CreateWindowEx(NULL, app.wcName, title.c_str(), dwStyle, centerX, centerY, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, app.hInstance, NULL);
 
 		ShowWindow(hWnd, SW_SHOW);
 	}
