@@ -1,18 +1,41 @@
-struct VOut {
-    float4 position : SV_POSITION;
-    float4 color : COLOR;
-};
+//--------------------------------------------------------------------------------------
+// File: Tutorial04.fx
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//--------------------------------------------------------------------------------------
 
-VOut VShader(float4 position : POSITION, float4 color : COLOR) {
-    VOut output;
-
-    output.position = position;
-    output.color = color;
-
-    return output;
+//--------------------------------------------------------------------------------------
+// Constant Buffer Variables
+//--------------------------------------------------------------------------------------
+cbuffer ConstantBuffer : register(b0)
+{
+	matrix World;
+	matrix View;
+	matrix Projection;
 }
 
+//--------------------------------------------------------------------------------------
+struct VS_OUTPUT {
+	float4 Pos : SV_POSITION;
+	float4 color : COLOR0;
+};
 
+//--------------------------------------------------------------------------------------
+// Vertex Shader
+//--------------------------------------------------------------------------------------
+VS_OUTPUT VShader(float4 Pos : POSITION, float4 color : COLOR) {
+
+	VS_OUTPUT output = (VS_OUTPUT)0;
+	output.Pos = mul(Pos, World);
+	output.Pos = mul(output.Pos, View);
+	output.Pos = mul(output.Pos, Projection);
+	output.color = color;
+	return output;
+}
+
+//--------------------------------------------------------------------------------------
+// Pixel Shader
+//--------------------------------------------------------------------------------------
 float4 PShader(float4 position : SV_POSITION, float4 color : COLOR) : SV_TARGET {
-    return color;
+	return color;
 }

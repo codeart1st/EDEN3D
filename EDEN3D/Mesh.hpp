@@ -18,7 +18,7 @@ namespace EDEN3D {
 		void render();
 
 	protected:
-		VERTEX* OurVertices;
 		ID3D11Buffer *pVBuffer;
+		ID3D11Buffer *pIBuffer;
 	};
 }

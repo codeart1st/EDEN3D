@@ -45,11 +45,14 @@ namespace EDEN3D {
 
 		factory->CreateSwapChain(GameApplication::device, &scd, &swapchain);
 
-		// Set the viewport
+		// TODO: Das sollte im render prozess geupdated werden -> unterschiedliche fenstergrößen
+		// oder mehrere contexte nutzen?
 		D3D11_VIEWPORT viewport = { 0 };
 
 		viewport.TopLeftX = 0;
 		viewport.TopLeftY = 0;
+		viewport.MinDepth = 0.0f;
+		viewport.MaxDepth = 1.0f;
 		viewport.Width = window.getWidth();
 		viewport.Height = window.getHeight();
 
@@ -62,6 +65,7 @@ namespace EDEN3D {
 
 		swapchain->SetFullscreenState(FALSE, NULL);
 
+		pCBuffer->Release();
 		pLayout->Release();
 		pVS->Release();
 		pPS->Release();
@@ -70,6 +74,8 @@ namespace EDEN3D {
 	}
 
 	void DefaultRenderer::InitPipeline() {
+
+		pCBuffer = NULL;
 
 		// load and compile the two shaders
 		ID3D10Blob *VS, *PS;
@@ -97,6 +103,27 @@ namespace EDEN3D {
 		// use the back buffer address to create the render target
 		GameApplication::device->CreateRenderTargetView(pBackBuffer, NULL, &backbuffer);
 		pBackBuffer->Release();
+
+		D3D11_BUFFER_DESC bd = { 0 };
+
+		// Create the constant buffer
+		bd.Usage = D3D11_USAGE_DEFAULT;
+		bd.ByteWidth = sizeof(ConstantBuffer);
+		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bd.CPUAccessFlags = 0;
+		GameApplication::device->CreateBuffer(&bd, NULL, &pCBuffer);
+
+		// Initialize the world matrix
+		g_World = XMMatrixIdentity();
+
+		// Initialize the view matrix
+		XMVECTOR Eye = XMVectorSet(0.0f, 1.0f, -5.0f, 0.0f);
+		XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+		XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+		g_View = XMMatrixLookAtLH(Eye, At, Up);
+
+		// Initialize the projection matrix
+		g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV2, 640 / (FLOAT)480, 0.01f, 100.0f);
 	}
 
 	void DefaultRenderer::render(const Camera& camera, Mesh& tri) {
@@ -116,6 +143,21 @@ namespace EDEN3D {
 		};
 
 		GameApplication::context->ClearRenderTargetView(backbuffer, color);
+
+		static float t = 0.0f;
+		static DWORD dwTimeStart = 0;
+		DWORD dwTimeCur = GetTickCount();
+		if (dwTimeStart == 0)
+			dwTimeStart = dwTimeCur;
+		t = (dwTimeCur - dwTimeStart) / 1000.0f;
+
+		g_World = XMMatrixRotationY(t);
+
+		ConstantBuffer.mWorld = XMMatrixTranspose(g_World);
+		ConstantBuffer.mView = XMMatrixTranspose(g_View);
+		ConstantBuffer.mProjection = XMMatrixTranspose(g_Projection);
+		GameApplication::context->UpdateSubresource(pCBuffer, 0, NULL, &ConstantBuffer, 0, 0);
+		GameApplication::context->VSSetConstantBuffers(0, 1, &pCBuffer);
 
 		tri.render();
 
