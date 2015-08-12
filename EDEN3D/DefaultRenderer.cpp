@@ -31,7 +31,7 @@ namespace EDEN3D {
 		scd.BufferDesc.Height = window.getHeight();
 		scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		scd.OutputWindow = window.hWnd;
-		scd.SampleDesc.Count = 1;
+		scd.SampleDesc.Count = 8;
 		scd.Windowed = TRUE;
 		scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
@@ -117,13 +117,13 @@ namespace EDEN3D {
 		g_World = XMMatrixIdentity();
 
 		// Initialize the view matrix
-		XMVECTOR Eye = XMVectorSet(0.0f, 1.0f, -5.0f, 0.0f);
-		XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+		XMVECTOR Eye = XMVectorSet(0.0f, 0.0f, -10.0f, 0.0f);
+		XMVECTOR At = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 		XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 		g_View = XMMatrixLookAtLH(Eye, At, Up);
 
 		// Initialize the projection matrix
-		g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV2, 640 / (FLOAT)480, 0.01f, 100.0f);
+		g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, 640 / (FLOAT)480, 0.01f, 100.0f);
 	}
 
 	void DefaultRenderer::render(const Camera& camera, Mesh& tri) {
@@ -152,6 +152,8 @@ namespace EDEN3D {
 		t = (dwTimeCur - dwTimeStart) / 1000.0f;
 
 		g_World = XMMatrixRotationY(t);
+		g_World *= XMMatrixScaling(0.5f, 0.5f, 0.5f);
+		g_World *= XMMatrixTranslation(0.0f, -2.0f, 0.0f);
 
 		ConstantBuffer.mWorld = XMMatrixTranspose(g_World);
 		ConstantBuffer.mView = XMMatrixTranspose(g_View);

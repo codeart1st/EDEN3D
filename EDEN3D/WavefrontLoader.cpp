@@ -13,7 +13,7 @@ namespace EDEN3D {
 		float p1, p2, p3;
 
 		vector<XMFLOAT3> vertices;
-		vector<XMFLOAT3> indices;
+		vector<WORD> indices;
 
 		ifstream file(filepath);
 
@@ -24,7 +24,9 @@ namespace EDEN3D {
 				vertices.push_back(XMFLOAT3(p1, p2, p3));
 				break;
 			case 'f':
-				indices.push_back(XMFLOAT3(p1, p2, p3));
+				indices.push_back(p1 - 1);
+				indices.push_back(p2 - 1);
+				indices.push_back(p3 - 1);
 				break;
 			}
 		}

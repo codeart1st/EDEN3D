@@ -5,15 +5,27 @@
 
 namespace EDEN3D {
 
-	const int vcount = 8;
-	const int icount = 36;
-
-	Mesh::Mesh(vector<XMFLOAT3>& vertices, vector<XMFLOAT3>& indices) {
+	Mesh::Mesh(vector<XMFLOAT3>& vertices, vector<WORD>& indices) {
 
 		pVBuffer = NULL;
 		pIBuffer = NULL;
 
-		VERTEX OurVertices[vcount] = {
+		vcount = vertices.size();
+		icount = indices.size();
+
+		VERTEX* OurVertices = new VERTEX[vcount];
+		
+		for (int i = 0; i < vcount; i++) {
+			OurVertices[i] = { vertices[i], XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) };
+		}
+
+		WORD* OurIndices = new WORD[icount];
+
+		for (int i = 0; i < icount; i++) {
+			OurIndices[i] = indices[i];
+		}
+
+		/*VERTEX* OurVertices = new VERTEX[vcount] {
 			{ XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f) },
 			{ XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f) },
 			{ XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f) },
@@ -22,9 +34,9 @@ namespace EDEN3D {
 			{ XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f) },
 			{ XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f) },
 			{ XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) },
-		};
+		};*/
 
-		WORD OurIndices[icount] =
+		/*WORD* OurIndices = new WORD[icount]
 		{
 			3, 1, 0,
 			2, 1, 3,
@@ -43,7 +55,7 @@ namespace EDEN3D {
 
 			6, 4, 5,
 			7, 4, 6,
-		};
+		};*/
 
 		D3D11_BUFFER_DESC bd = { 0 };
 
@@ -63,6 +75,9 @@ namespace EDEN3D {
 
 		InitData.pSysMem = OurIndices;
 		GameApplication::device->CreateBuffer(&bd, &InitData, &pIBuffer);
+
+		delete[] OurVertices;
+		delete[] OurIndices;
 	}
 
 	void Mesh::render() {

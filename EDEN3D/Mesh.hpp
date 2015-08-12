@@ -12,7 +12,7 @@ namespace EDEN3D {
 	class EDEN3D_API Mesh {
 
 	public:
-		Mesh(vector<XMFLOAT3>&, vector<XMFLOAT3>&);
+		Mesh(vector<XMFLOAT3>&, vector<WORD>&);
 		~Mesh();
 
 		void render();
@@ -20,5 +20,7 @@ namespace EDEN3D {
 	protected:
 		ID3D11Buffer *pVBuffer;
 		ID3D11Buffer *pIBuffer;
+
+		unsigned int vcount, icount;
 	};
 }
