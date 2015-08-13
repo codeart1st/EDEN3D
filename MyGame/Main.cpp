@@ -12,7 +12,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		EDEN3D::Color(0.15f, 0.15f, 0.15f, 1.0f)
 	});
 
-	EDEN3D::Mesh* mesh = EDEN3D::WavefrontLoader::load("Dragon.obj");
+	EDEN3D::Mesh* mesh = EDEN3D::WavefrontLoader::load("Bunny.obj");
 	
 	int exit = game.run([&] () {
 

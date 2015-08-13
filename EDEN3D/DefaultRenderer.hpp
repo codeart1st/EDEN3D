@@ -17,9 +17,10 @@ namespace EDEN3D {
 		void render(const Camera&, Mesh&);
 		
 	private:
-		void InitPipeline();
-		
 		RendererOptions options;
+
+		
+		ID3D11DepthStencilView* pDepthStencilView;
 
 		IDXGISwapChain* swapchain;
 		ID3D11RenderTargetView* backbuffer;

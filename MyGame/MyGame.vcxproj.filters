@@ -26,4 +26,15 @@
       <Filter>Ressourcendateien</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="Dragon.obj">
+      <Filter>Ressourcendateien</Filter>
+    </Object>
+    <Object Include="Teapot.obj">
+      <Filter>Ressourcendateien</Filter>
+    </Object>
+    <Object Include="Bunny.obj">
+      <Filter>Ressourcendateien</Filter>
+    </Object>
+  </ItemGroup>
 </Project>

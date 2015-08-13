@@ -23,13 +23,13 @@ struct VS_OUTPUT {
 //--------------------------------------------------------------------------------------
 // Vertex Shader
 //--------------------------------------------------------------------------------------
-VS_OUTPUT VShader(float4 Pos : POSITION, float4 color : COLOR) {
+VS_OUTPUT VShader(float4 Pos : POSITION, float4 normal : NORMAL) {
 
 	VS_OUTPUT output = (VS_OUTPUT)0;
 	output.Pos = mul(Pos, World);
 	output.Pos = mul(output.Pos, View);
 	output.Pos = mul(output.Pos, Projection);
-	output.color = color;
+	output.color = float4(normal.x, normal.y, normal.z, 1.0);
 	return output;
 }
 

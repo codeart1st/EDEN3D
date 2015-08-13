@@ -18,7 +18,7 @@ namespace EDEN3D {
 
 		AdjustWindowRect(&rect, dwStyle, FALSE);
 
-		hWnd = CreateWindowEx(NULL, app.wcName, title.c_str(), dwStyle, centerX, centerY, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, app.hInstance, NULL);
+		hWnd = CreateWindowEx(NULL, app.winClassName, title.c_str(), dwStyle, centerX, centerY, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, app.hInstance, NULL);
 
 		ShowWindow(hWnd, SW_SHOW);
 	}

@@ -6,20 +6,20 @@ namespace EDEN3D {
 	
 	typedef struct EDEN3D_API VERTEX {
 		XMFLOAT3 Position;
-		XMFLOAT4 Color;
+		XMFLOAT3 Normal;
 	};
 
 	class EDEN3D_API Mesh {
 
 	public:
-		Mesh(vector<XMFLOAT3>&, vector<WORD>&);
+		Mesh(vector<VERTEX>&, vector<DWORD>&);
 		~Mesh();
 
 		void render();
 
 	protected:
-		ID3D11Buffer *pVBuffer;
-		ID3D11Buffer *pIBuffer;
+		ID3D11Buffer* VertexBuffer;
+		ID3D11Buffer* IndexBuffer;
 
 		unsigned int vcount, icount;
 	};

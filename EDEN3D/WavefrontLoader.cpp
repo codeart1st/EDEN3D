@@ -2,37 +2,55 @@
 
 #include <fstream>
 
-using namespace std;
-using namespace DirectX;
-
 namespace EDEN3D {
 	
 	Mesh* WavefrontLoader::load(string filepath) {
 
-		char type;
-		float p1, p2, p3;
+		string type, p1, p2, p3;
 
+		unsigned int index1, index2, counter = 0;
+
+		vector<VERTEX> verticesOut;
 		vector<XMFLOAT3> vertices;
-		vector<WORD> indices;
+		vector<XMFLOAT3> normals;
+		vector<DWORD> indicesOut;
+		vector<DWORD> indices;
 
 		ifstream file(filepath);
 
 		while (file >> type >> p1 >> p2 >> p3) {
 
-			switch (type) {
-			case 'v':
-				vertices.push_back(XMFLOAT3(p1, p2, p3));
-				break;
-			case 'f':
-				indices.push_back(p1 - 1);
-				indices.push_back(p2 - 1);
-				indices.push_back(p3 - 1);
-				break;
+			if (type == "v") {
+				vertices.push_back(XMFLOAT3(stof(p1), stof(p2), stof(p3)));
+			} else if (type == "vn") {
+				normals.push_back(XMFLOAT3(stof(p1), stof(p2), stof(p3)));
+			} else if (type == "f") {
+
+				index1 = index2 = stoi(p1) - 1;
+				indicesOut.push_back(counter++);
+				verticesOut.push_back({
+					vertices[index1],
+					normals[index2]
+				});
+
+				index1 = index2 = stoi(p2) - 1;
+				indicesOut.push_back(counter++);
+				verticesOut.push_back({
+					vertices[index1],
+					normals[index2]
+				});
+				
+				index1 = index2 = stoi(p3) - 1;
+				indicesOut.push_back(counter++);
+				verticesOut.push_back({
+					vertices[index1],
+					normals[index2]
+				});
 			}
 		}
 
 		file.close();
 
-		return new Mesh(vertices, indices);
+		return new Mesh(verticesOut, indicesOut);
 	}
 }

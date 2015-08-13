@@ -1,10 +1,6 @@
-#pragma comment (lib, "d3d11.lib")
-
 #include "GameApplication.hpp"
 
 #include <vector>
-
-using namespace std;
 
 namespace EDEN3D {
 
@@ -28,45 +24,42 @@ namespace EDEN3D {
 		} else counter++;
 
 		this->hInstance = hInstance;
-		this->wcName = L"GameWindowClass";
+		this->winClassName = L"GameWindowClass";
 
-		wc = { 0 };
-		wc.cbSize = sizeof(WNDCLASSEX);
-		wc.style = CS_HREDRAW | CS_VREDRAW;
-		wc.lpfnWndProc = WndProc;
-		wc.hInstance = this->hInstance;
-		wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-		wc.lpszClassName = this->wcName;
+		winClass = {};
+		winClass.cbSize = sizeof(WNDCLASSEX);
+		winClass.style = CS_HREDRAW | CS_VREDRAW;
+		winClass.lpfnWndProc = WndProc;
+		winClass.hInstance = this->hInstance;
+		winClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+		winClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+		winClass.lpszClassName = this->winClassName;
 
 		HANDLE hIcon = LoadImage(0, iconPath.c_str(), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
 
-		if (hIcon) {
-			wc.hIcon = reinterpret_cast<HICON>(hIcon);
-		}
+		if (hIcon) winClass.hIcon = reinterpret_cast<HICON>(hIcon);
 
-		RegisterClassEx(&wc);
+		RegisterClassEx(&winClass);
 
 		D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, NULL, NULL, D3D11_SDK_VERSION, &device, NULL, &context);
-
-		GetDeviceInfo();
 	}
 
 	GameApplication::~GameApplication() {
 
-		device->Release();
 		context->Release();
+		device->Release();
 	}
 
 	void GameApplication::GetDeviceInfo() {
 
+		// TODO:
 		IDXGIDevice* device = NULL;
 		IDXGIAdapter* adapter = NULL;
 
 		GameApplication::device->QueryInterface(&device);
 		device->GetAdapter(&adapter);
 
-		DXGI_ADAPTER_DESC description = { 0 };
+		DXGI_ADAPTER_DESC description = {};
 		adapter->GetDesc(&description);
 
 		UINT i = 0;
@@ -78,7 +71,7 @@ namespace EDEN3D {
 			++i;
 		}
 
-		DXGI_OUTPUT_DESC desc = { 0 };
+		DXGI_OUTPUT_DESC desc = {};
 		
 		for (auto output: outputs) {
 			output->GetDesc(&desc);

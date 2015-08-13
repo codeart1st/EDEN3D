@@ -1,6 +1,3 @@
-#pragma comment (lib, "d3d11.lib")
-#pragma comment (lib, "d3dx11.lib")
-
 #include "DefaultRenderer.hpp"
 
 namespace EDEN3D {
@@ -23,7 +20,7 @@ namespace EDEN3D {
 
 		this->options = options;
 
-		DXGI_SWAP_CHAIN_DESC scd = { 0 };
+		DXGI_SWAP_CHAIN_DESC scd = {};
 
 		scd.BufferCount = 1;
 		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -31,7 +28,7 @@ namespace EDEN3D {
 		scd.BufferDesc.Height = window.getHeight();
 		scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		scd.OutputWindow = window.hWnd;
-		scd.SampleDesc.Count = 8;
+		scd.SampleDesc.Count = 1;
 		scd.Windowed = TRUE;
 		scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
@@ -47,7 +44,7 @@ namespace EDEN3D {
 
 		// TODO: Das sollte im render prozess geupdated werden -> unterschiedliche fenstergrößen
 		// oder mehrere contexte nutzen?
-		D3D11_VIEWPORT viewport = { 0 };
+		D3D11_VIEWPORT viewport = {};
 
 		viewport.TopLeftX = 0;
 		viewport.TopLeftY = 0;
@@ -57,23 +54,6 @@ namespace EDEN3D {
 		viewport.Height = window.getHeight();
 
 		GameApplication::context->RSSetViewports(1, &viewport);
-
-		InitPipeline();
-	}
-
-	DefaultRenderer::~DefaultRenderer() {
-
-		swapchain->SetFullscreenState(FALSE, NULL);
-
-		pCBuffer->Release();
-		pLayout->Release();
-		pVS->Release();
-		pPS->Release();
-		swapchain->Release();
-		backbuffer->Release();
-	}
-
-	void DefaultRenderer::InitPipeline() {
 
 		pCBuffer = NULL;
 
@@ -90,7 +70,7 @@ namespace EDEN3D {
 		D3D11_INPUT_ELEMENT_DESC ied[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 
 		GameApplication::device->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &pLayout);
@@ -104,36 +84,66 @@ namespace EDEN3D {
 		GameApplication::device->CreateRenderTargetView(pBackBuffer, NULL, &backbuffer);
 		pBackBuffer->Release();
 
-		D3D11_BUFFER_DESC bd = { 0 };
+		D3D11_TEXTURE2D_DESC descDepth = {};
 
-		// Create the constant buffer
+		descDepth.Width = window.getWidth();
+		descDepth.Height = window.getHeight();
+		descDepth.MipLevels = 1;
+		descDepth.ArraySize = 1;
+		descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+		descDepth.SampleDesc.Count = 1;
+		descDepth.Usage = D3D11_USAGE_DEFAULT;
+		descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+		descDepth.CPUAccessFlags = 0;
+		descDepth.MiscFlags = 0;
+
+		D3D11_DEPTH_STENCIL_VIEW_DESC descDSV = {};
+		descDSV.Format = descDepth.Format;
+		descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		descDSV.Texture2D.MipSlice = 0;
+
+		ID3D11Texture2D* pDepthStencil;
+		GameApplication::device->CreateTexture2D(&descDepth, NULL, &pDepthStencil);
+		GameApplication::device->CreateDepthStencilView(pDepthStencil, &descDSV, &pDepthStencilView);
+		pDepthStencil->Release();
+
+		D3D11_BUFFER_DESC bd = {};
+
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.ByteWidth = sizeof(ConstantBuffer);
 		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bd.CPUAccessFlags = 0;
 		GameApplication::device->CreateBuffer(&bd, NULL, &pCBuffer);
 
-		// Initialize the world matrix
-		g_World = XMMatrixIdentity();
-
-		// Initialize the view matrix
 		XMVECTOR Eye = XMVectorSet(0.0f, 0.0f, -10.0f, 0.0f);
 		XMVECTOR At = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 		XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 		g_View = XMMatrixLookAtLH(Eye, At, Up);
-
-		// Initialize the projection matrix
+		g_World = XMMatrixIdentity();
 		g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, 640 / (FLOAT)480, 0.01f, 100.0f);
 	}
 
-	void DefaultRenderer::render(const Camera& camera, Mesh& tri) {
+	DefaultRenderer::~DefaultRenderer() {
+
+		swapchain->SetFullscreenState(FALSE, NULL);
+		
+		pDepthStencilView->Release();
+		pCBuffer->Release();
+		pLayout->Release();
+		pVS->Release();
+		pPS->Release();
+		swapchain->Release();
+		backbuffer->Release();
+	}
+
+	void DefaultRenderer::render(const Camera& camera, Mesh& mesh) {
 
 		// set the shader objects
 		GameApplication::context->VSSetShader(pVS, 0, 0);
 		GameApplication::context->PSSetShader(pPS, 0, 0);
 		
 		// set the render target as the back buffer
-		GameApplication::context->OMSetRenderTargets(1, &backbuffer, NULL);
+		GameApplication::context->OMSetRenderTargets(1, &backbuffer, pDepthStencilView);
 
 		FLOAT color[4] = {
 			options.clearColor.r,
@@ -143,6 +153,7 @@ namespace EDEN3D {
 		};
 
 		GameApplication::context->ClearRenderTargetView(backbuffer, color);
+		GameApplication::context->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0);
 
 		static float t = 0.0f;
 		static DWORD dwTimeStart = 0;
@@ -152,8 +163,8 @@ namespace EDEN3D {
 		t = (dwTimeCur - dwTimeStart) / 1000.0f;
 
 		g_World = XMMatrixRotationY(t);
-		g_World *= XMMatrixScaling(0.5f, 0.5f, 0.5f);
-		g_World *= XMMatrixTranslation(0.0f, -2.0f, 0.0f);
+		g_World *= XMMatrixScaling(2.5f, 2.5f, 2.5f);
+		g_World *= XMMatrixTranslation(0.0f, 0.0f, 0.0f);
 
 		ConstantBuffer.mWorld = XMMatrixTranspose(g_World);
 		ConstantBuffer.mView = XMMatrixTranspose(g_View);
@@ -161,7 +172,7 @@ namespace EDEN3D {
 		GameApplication::context->UpdateSubresource(pCBuffer, 0, NULL, &ConstantBuffer, 0, 0);
 		GameApplication::context->VSSetConstantBuffers(0, 1, &pCBuffer);
 
-		tri.render();
+		mesh.render();
 
 		swapchain->Present(0, 0);
 	}

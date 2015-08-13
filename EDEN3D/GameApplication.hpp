@@ -37,13 +37,12 @@ namespace EDEN3D {
 		static ID3D11DeviceContext* context;
 
 	protected:
-		WNDCLASSEX wc;
+		WNDCLASSEX winClass;
+		HINSTANCE hInstance;
+		LPCWSTR winClassName;
 
 	private:
 		static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 		static int counter;
-
-		HINSTANCE hInstance;
-		LPCWSTR wcName;
 	};
 }
