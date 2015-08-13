@@ -32,7 +32,7 @@ namespace EDEN3D {
 		winClass.lpfnWndProc = WndProc;
 		winClass.hInstance = this->hInstance;
 		winClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-		winClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+		winClass.hCursor = LoadCursorFromFile(L"cursor.cur");
 		winClass.lpszClassName = this->winClassName;
 
 		HANDLE hIcon = LoadImage(0, iconPath.c_str(), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
@@ -81,9 +81,10 @@ namespace EDEN3D {
 
 	LRESULT CALLBACK GameApplication::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
-		if (message == WM_DESTROY) {
-			PostQuitMessage(0);
-			return 0;
+		switch (message) {
+			case WM_DESTROY:
+				PostQuitMessage(0);
+				return 0;
 		}
 
 		return DefWindowProc(hwnd, message, wParam, lParam);

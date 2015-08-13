@@ -37,4 +37,9 @@
       <Filter>Ressourcendateien</Filter>
     </Object>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor.cur">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+  </ItemGroup>
 </Project>

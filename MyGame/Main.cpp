@@ -5,7 +5,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
 
-	EDEN3D::GameApplication game(hInstance, L"game.ico");
+	EDEN3D::GameApplication game(hInstance, L"favicon.ico");
 	EDEN3D::GameWindow window(game, L"EDEN3D - MyGameWindow");
 
 	EDEN3D::PerspectiveCamera camera(XMConvertToRadians(45), window.getWidth() / (float)window.getHeight(), 0.01f, 100.0f);
@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		EDEN3D::Color(0.15f, 0.15f, 0.15f, 1.0f)
 	});
 
-	EDEN3D::Mesh* mesh = EDEN3D::WavefrontLoader::load("Bunny.obj");
+	EDEN3D::Mesh* mesh = EDEN3D::WavefrontLoader::load("Dragon.obj");
 	
 	int exit = game.run([&] () {
 
