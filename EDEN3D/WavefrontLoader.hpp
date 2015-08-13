@@ -9,5 +9,8 @@ namespace EDEN3D {
 
 	public:
 		static Mesh* load(const string);
+
+	private:
+		static vector<string> split(const string&, string);
 	};
 }

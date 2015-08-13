@@ -10,5 +10,7 @@ namespace EDEN3D {
 	public:
 		Camera() {};
 		virtual ~Camera() {};
+
+		virtual void render() = 0;
 	};
 }

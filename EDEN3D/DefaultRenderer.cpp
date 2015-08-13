@@ -55,8 +55,6 @@ namespace EDEN3D {
 
 		GameApplication::context->RSSetViewports(1, &viewport);
 
-		pCBuffer = NULL;
-
 		// load and compile the two shaders
 		ID3D10Blob *VS, *PS;
 		D3DX11CompileFromFile(L"shaders.shader", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &VS, 0, 0);
@@ -106,21 +104,6 @@ namespace EDEN3D {
 		GameApplication::device->CreateTexture2D(&descDepth, NULL, &pDepthStencil);
 		GameApplication::device->CreateDepthStencilView(pDepthStencil, &descDSV, &pDepthStencilView);
 		pDepthStencil->Release();
-
-		D3D11_BUFFER_DESC bd = {};
-
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.ByteWidth = sizeof(ConstantBuffer);
-		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		bd.CPUAccessFlags = 0;
-		GameApplication::device->CreateBuffer(&bd, NULL, &pCBuffer);
-
-		XMVECTOR Eye = XMVectorSet(0.0f, 0.0f, -10.0f, 0.0f);
-		XMVECTOR At = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
-		XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-		g_View = XMMatrixLookAtLH(Eye, At, Up);
-		g_World = XMMatrixIdentity();
-		g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, 640 / (FLOAT)480, 0.01f, 100.0f);
 	}
 
 	DefaultRenderer::~DefaultRenderer() {
@@ -128,7 +111,6 @@ namespace EDEN3D {
 		swapchain->SetFullscreenState(FALSE, NULL);
 		
 		pDepthStencilView->Release();
-		pCBuffer->Release();
 		pLayout->Release();
 		pVS->Release();
 		pPS->Release();
@@ -136,7 +118,7 @@ namespace EDEN3D {
 		backbuffer->Release();
 	}
 
-	void DefaultRenderer::render(const Camera& camera, Mesh& mesh) {
+	void DefaultRenderer::render(Camera& camera, Mesh& mesh) {
 
 		// set the shader objects
 		GameApplication::context->VSSetShader(pVS, 0, 0);
@@ -155,23 +137,7 @@ namespace EDEN3D {
 		GameApplication::context->ClearRenderTargetView(backbuffer, color);
 		GameApplication::context->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0);
 
-		static float t = 0.0f;
-		static DWORD dwTimeStart = 0;
-		DWORD dwTimeCur = GetTickCount();
-		if (dwTimeStart == 0)
-			dwTimeStart = dwTimeCur;
-		t = (dwTimeCur - dwTimeStart) / 1000.0f;
-
-		g_World = XMMatrixRotationY(t);
-		g_World *= XMMatrixScaling(2.5f, 2.5f, 2.5f);
-		g_World *= XMMatrixTranslation(0.0f, 0.0f, 0.0f);
-
-		ConstantBuffer.mWorld = XMMatrixTranspose(g_World);
-		ConstantBuffer.mView = XMMatrixTranspose(g_View);
-		ConstantBuffer.mProjection = XMMatrixTranspose(g_Projection);
-		GameApplication::context->UpdateSubresource(pCBuffer, 0, NULL, &ConstantBuffer, 0, 0);
-		GameApplication::context->VSSetConstantBuffers(0, 1, &pCBuffer);
-
+		camera.render();
 		mesh.render();
 
 		swapchain->Present(0, 0);
