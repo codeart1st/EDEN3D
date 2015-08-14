@@ -12,6 +12,8 @@ namespace EDEN3D {
 	public:
 		GameWindow(GameApplication&, wstring = title, const unsigned int = 640, const unsigned int = 480);
 
+		HWND getHandle() const;
+
 		const int& getWidth() const { return width; };
 		const int& getHeight() const { return height; };
 

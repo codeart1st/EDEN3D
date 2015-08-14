@@ -6,14 +6,12 @@
 
 namespace EDEN3D {
 
-	void WavefrontLoader::load(string filepath, const function<void (Mesh*)>& func) {
+	void WavefrontLoader::_load(wstring filepath, vector<VERTEX>* verticesOut, vector<DWORD>* indicesOut) {
 
 		unsigned int index1, index2, counter = 0;
 
-		vector<VERTEX> verticesOut;
 		vector<XMFLOAT3> vertices;
 		vector<XMFLOAT3> normals;
-		vector<DWORD> indicesOut;
 		vector<DWORD> indices;
 
 		ifstream file(filepath);
@@ -36,8 +34,8 @@ namespace EDEN3D {
 				index = p1.find_last_of("/") + 1;
 				index1 = stoi(p1) - 1;
 				index2 = stoi(p1.substr(index)) - 1;
-				indicesOut.push_back(counter++);
-				verticesOut.push_back({
+				indicesOut->push_back(counter++);
+				verticesOut->push_back({
 					vertices[index1],
 					normals[index2]
 				});
@@ -45,8 +43,8 @@ namespace EDEN3D {
 				index = p2.find_last_of("/") + 1;
 				index1 = stoi(p2) - 1;
 				index2 = stoi(p2.substr(index)) - 1;
-				indicesOut.push_back(counter++);
-				verticesOut.push_back({
+				indicesOut->push_back(counter++);
+				verticesOut->push_back({
 					vertices[index1],
 					normals[index2]
 				});
@@ -54,8 +52,8 @@ namespace EDEN3D {
 				index = p3.find_last_of("/") + 1;
 				index1 = stoi(p3) - 1;
 				index2 = stoi(p3.substr(index)) - 1;
-				indicesOut.push_back(counter++);
-				verticesOut.push_back({
+				indicesOut->push_back(counter++);
+				verticesOut->push_back({
 					vertices[index1],
 					normals[index2]
 				});
@@ -63,7 +61,24 @@ namespace EDEN3D {
 		}
 
 		file.close();
+	}
 
+	void WavefrontLoader::load(wstring filepath, const Callback& func) {
+
+		vector<VERTEX> verticesOut;
+		vector<DWORD> indicesOut;
+
+		_load(filepath, &verticesOut, &indicesOut);
 		func(new Mesh(verticesOut, indicesOut));
+	}
+
+	void WavefrontLoader::load(wstring filepath, Mesh** mesh) {
+
+
+		vector<VERTEX> verticesOut;
+		vector<DWORD> indicesOut;
+
+		_load(filepath, &verticesOut, &indicesOut);
+		*mesh = new Mesh(verticesOut, indicesOut);
 	}
 }

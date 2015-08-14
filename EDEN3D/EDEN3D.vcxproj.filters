@@ -54,6 +54,9 @@
     <ClInclude Include="WavefrontLoader.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="MouseControls.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApplication.cpp">
@@ -84,6 +87,9 @@
       <Filter>Quelldateien\EDEN3D</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
+      <Filter>Quelldateien\EDEN3D</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseControls.cpp">
       <Filter>Quelldateien\EDEN3D</Filter>
     </ClCompile>
   </ItemGroup>

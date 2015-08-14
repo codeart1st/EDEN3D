@@ -22,4 +22,8 @@ namespace EDEN3D {
 
 		ShowWindow(hWnd, SW_SHOW);
 	}
+
+	HWND GameWindow::getHandle() const {
+		return hWnd;
+	}
 }

@@ -10,6 +10,12 @@ namespace EDEN3D {
 	class EDEN3D_API WavefrontLoader {
 
 	public:
-		static void load(string, const function<void (Mesh*)>&);
+		typedef function<void(Mesh*)> Callback;
+
+		static void load(wstring, const Callback&);
+		static void load(wstring, Mesh**);
+
+	private:
+		static void _load(wstring, vector<VERTEX>*, vector<DWORD>*);
 	};
 }

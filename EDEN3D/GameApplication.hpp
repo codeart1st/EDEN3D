@@ -11,15 +11,19 @@ namespace EDEN3D {
 	friend class GameWindow;
 
 	public:
+		typedef function<void ()> GameLoop;
+
 		GameApplication(const HINSTANCE&, wstring = NULL);
 		~GameApplication();
 
-		void GetDeviceInfo();
+		void getDeviceInfo();
+		HINSTANCE getHandle() const;
 
-		int run(const function<void ()>&);
+		int run(const GameLoop&);
 
 		static ID3D11Device* device;
 		static ID3D11DeviceContext* context;
+		static LPDIRECTINPUT8 directInput;
 
 	protected:
 		WNDCLASSEX winClass;

@@ -2,11 +2,12 @@
 #include <PerspectiveCamera.hpp>
 #include <DefaultRenderer.hpp>
 #include <WavefrontLoader.hpp>
+#include <MouseControls.hpp>
 
 #include <thread>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
-
+	
 	EDEN3D::GameApplication game(hInstance, L"favicon.ico");
 	EDEN3D::GameWindow window(game, L"EDEN3D - MyGameWindow");
 
@@ -17,15 +18,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		EDEN3D::Color(0.15f, 0.15f, 0.15f, 1.0f)
 	});
 
+	EDEN3D::MouseControls controls(window);
+
 	EDEN3D::Mesh* mesh = NULL;
 	
-	thread load(EDEN3D::WavefrontLoader::load, "Bunny.obj", [&] (EDEN3D::Mesh* created) {
+	thread load([&] {
 		// load the model asynchronous
-		mesh = created;
+		EDEN3D::WavefrontLoader::load(L"Bunny.obj", &mesh);
 	});
 	
-	int exit = game.run([&] () {
+	int exit = game.run([&] {
+		// game loop
 
+		/* controls.update([&] (int x, int y, int button) {
+		   });
+		*/
 		renderer.render(camera, mesh);
 	});
 

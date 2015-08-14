@@ -8,6 +8,7 @@ namespace EDEN3D {
 	
 	ID3D11Device* GameApplication::device = NULL;
 	ID3D11DeviceContext* GameApplication::context = NULL;
+	LPDIRECTINPUT8 GameApplication::directInput = NULL;
 
 	GameApplication::GameApplication(const HINSTANCE& hInstance, wstring iconPath) {
 
@@ -23,6 +24,7 @@ namespace EDEN3D {
 
 		} else counter++;
 
+		directInput = NULL;
 		this->hInstance = hInstance;
 		this->winClassName = L"GameWindowClass";
 
@@ -42,15 +44,21 @@ namespace EDEN3D {
 		RegisterClassEx(&winClass);
 
 		D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, NULL, NULL, D3D11_SDK_VERSION, &device, NULL, &context);
+		DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, NULL);
 	}
 
 	GameApplication::~GameApplication() {
 
+		directInput->Release();
 		context->Release();
 		device->Release();
 	}
 
-	void GameApplication::GetDeviceInfo() {
+	HINSTANCE GameApplication::getHandle() const {
+		return hInstance;
+	}
+
+	void GameApplication::getDeviceInfo() {
 
 		// TODO:
 		IDXGIDevice* device = NULL;
@@ -79,7 +87,7 @@ namespace EDEN3D {
 		}
 	}
 
-	int GameApplication::run(const function<void ()>& func) {
+	int GameApplication::run(const GameLoop& func) {
 
 		MSG msg;
 

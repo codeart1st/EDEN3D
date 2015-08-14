@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="MouseControls.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="DefaultRenderer.hpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="WavefrontLoader.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MouseControls.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="DefaultRenderer.cpp" />
     <ClCompile Include="Main.cpp">

@@ -27,7 +27,7 @@ namespace EDEN3D {
 		scd.BufferDesc.Width = window.getWidth();
 		scd.BufferDesc.Height = window.getHeight();
 		scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		scd.OutputWindow = window.hWnd;
+		scd.OutputWindow = window.getHandle();
 		scd.SampleDesc.Count = 1;
 		scd.Windowed = TRUE;
 		scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
