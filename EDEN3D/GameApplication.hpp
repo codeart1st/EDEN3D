@@ -2,6 +2,8 @@
 
 #include "EDEN3D.hpp"
 
+#include <functional>
+
 namespace EDEN3D {
 
 	class EDEN3D_API GameApplication {
@@ -14,24 +16,7 @@ namespace EDEN3D {
 
 		void GetDeviceInfo();
 
-		template<typename Func> int run(const Func& func) {
-
-			MSG msg;
-
-			while (TRUE) {
-
-				if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-
-					TranslateMessage(&msg);
-					DispatchMessage(&msg);
-
-					if (msg.message == WM_QUIT) break;
-
-				} else func();
-			}
-
-			return msg.wParam;
-		};
+		int run(const function<void ()>&);
 
 		static ID3D11Device* device;
 		static ID3D11DeviceContext* context;

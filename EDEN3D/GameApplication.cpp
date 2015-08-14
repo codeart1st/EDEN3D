@@ -79,6 +79,26 @@ namespace EDEN3D {
 		}
 	}
 
+	int GameApplication::run(const function<void ()>& func) {
+
+		MSG msg;
+
+		while (TRUE) {
+
+			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+
+				if (msg.message == WM_QUIT) break;
+
+			}
+			else func();
+		}
+
+		return msg.wParam;
+	};
+
 	LRESULT CALLBACK GameApplication::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
 		switch (message) {

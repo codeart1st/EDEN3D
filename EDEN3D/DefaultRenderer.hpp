@@ -14,7 +14,7 @@ namespace EDEN3D {
 		DefaultRenderer(GameWindow&, const RendererOptions&);
 		~DefaultRenderer();
 
-		void render(Camera&, Mesh&);
+		void render(Camera&, Mesh*);
 		
 	private:
 		RendererOptions options;

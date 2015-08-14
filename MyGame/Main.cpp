@@ -3,6 +3,8 @@
 #include <DefaultRenderer.hpp>
 #include <WavefrontLoader.hpp>
 
+#include <thread>
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
 
 	EDEN3D::GameApplication game(hInstance, L"favicon.ico");
@@ -15,12 +17,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		EDEN3D::Color(0.15f, 0.15f, 0.15f, 1.0f)
 	});
 
-	EDEN3D::Mesh* mesh = EDEN3D::WavefrontLoader::load("Dragon.obj");
+	EDEN3D::Mesh* mesh = NULL;
+	
+	thread load(EDEN3D::WavefrontLoader::load, "Bunny.obj", [&] (EDEN3D::Mesh* created) {
+		// load the model asynchronous
+		mesh = created;
+	});
 	
 	int exit = game.run([&] () {
 
-		renderer.render(camera, *mesh);
+		renderer.render(camera, mesh);
 	});
+
+	load.join();
 
 	delete mesh;
 	return exit;

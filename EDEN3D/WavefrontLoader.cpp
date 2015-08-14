@@ -6,25 +6,7 @@
 
 namespace EDEN3D {
 
-	vector<string> WavefrontLoader::split(const string& s, string rgx_str) {
-
-		vector<string> elems;
-		regex rgx(rgx_str);
-
-		sregex_token_iterator iter(s.begin(), s.end(), rgx, -1);
-		sregex_token_iterator end;
-
-		while (iter != end)  {
-			elems.push_back(*iter);
-			++iter;
-		}
-
-		return elems;
-	}
-	
-	Mesh* WavefrontLoader::load(string filepath) {
-
-		//string type, p1, p2, p3;
+	void WavefrontLoader::load(string filepath, const function<void (Mesh*)>& func) {
 
 		unsigned int index1, index2, counter = 0;
 
@@ -45,9 +27,11 @@ namespace EDEN3D {
 
 			if (type == "v") {
 				vertices.push_back(XMFLOAT3(stof(p1), stof(p2), stof(p3)));
-			} else if (type == "vn") {
+			}
+			else if (type == "vn") {
 				normals.push_back(XMFLOAT3(stof(p1), stof(p2), stof(p3)));
-			} else if (type == "f") {
+			}
+			else if (type == "f") {
 
 				index = p1.find_last_of("/") + 1;
 				index1 = stoi(p1) - 1;
@@ -66,7 +50,7 @@ namespace EDEN3D {
 					vertices[index1],
 					normals[index2]
 				});
-				
+
 				index = p3.find_last_of("/") + 1;
 				index1 = stoi(p3) - 1;
 				index2 = stoi(p3.substr(index)) - 1;
@@ -80,6 +64,6 @@ namespace EDEN3D {
 
 		file.close();
 
-		return new Mesh(verticesOut, indicesOut);
+		func(new Mesh(verticesOut, indicesOut));
 	}
 }

@@ -118,7 +118,7 @@ namespace EDEN3D {
 		backbuffer->Release();
 	}
 
-	void DefaultRenderer::render(Camera& camera, Mesh& mesh) {
+	void DefaultRenderer::render(Camera& camera, EDEN3D::Mesh* mesh) {
 
 		// set the shader objects
 		GameApplication::context->VSSetShader(pVS, 0, 0);
@@ -138,7 +138,7 @@ namespace EDEN3D {
 		GameApplication::context->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH, 1.0f, 0);
 
 		camera.render();
-		mesh.render();
+		if (mesh) mesh->render();
 
 		swapchain->Present(0, 0);
 	}
