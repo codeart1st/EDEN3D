@@ -3,8 +3,6 @@
 #include "EDEN3D.hpp"
 #include "Mesh.hpp"
 
-#include <functional>
-
 namespace EDEN3D {
 
 	class EDEN3D_API WavefrontLoader {

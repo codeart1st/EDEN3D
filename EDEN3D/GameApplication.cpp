@@ -1,14 +1,16 @@
 #include "GameApplication.hpp"
 
-#include <vector>
+#include <sstream>
 
 namespace EDEN3D {
 
 	int GameApplication::counter = 0;
-	
+
 	ID3D11Device* GameApplication::device = NULL;
+
 	ID3D11DeviceContext* GameApplication::context = NULL;
-	LPDIRECTINPUT8 GameApplication::directInput = NULL;
+
+	vector<const GameApplication::ControlHandler*> GameApplication::controls;
 
 	GameApplication::GameApplication(const HINSTANCE& hInstance, wstring iconPath) {
 
@@ -24,7 +26,6 @@ namespace EDEN3D {
 
 		} else counter++;
 
-		directInput = NULL;
 		this->hInstance = hInstance;
 		this->winClassName = L"GameWindowClass";
 
@@ -44,12 +45,10 @@ namespace EDEN3D {
 		RegisterClassEx(&winClass);
 
 		D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, NULL, NULL, D3D11_SDK_VERSION, &device, NULL, &context);
-		DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, NULL);
 	}
 
 	GameApplication::~GameApplication() {
 
-		directInput->Release();
 		context->Release();
 		device->Release();
 	}
@@ -87,6 +86,11 @@ namespace EDEN3D {
 		}
 	}
 
+	void GameApplication::addControlHandler(ControlHandler* handler) {
+
+		GameApplication::controls.push_back(handler);
+	}
+
 	int GameApplication::run(const GameLoop& func) {
 
 		MSG msg;
@@ -107,7 +111,7 @@ namespace EDEN3D {
 		return msg.wParam;
 	};
 
-	LRESULT CALLBACK GameApplication::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+	LRESULT CALLBACK GameApplication::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
 		switch (message) {
 			case WM_DESTROY:
@@ -115,6 +119,10 @@ namespace EDEN3D {
 				return 0;
 		}
 
-		return DefWindowProc(hwnd, message, wParam, lParam);
+		for (auto handler: GameApplication::controls) {
+			(*handler)(hWnd, message, wParam, lParam);
+		}
+
+		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
 }

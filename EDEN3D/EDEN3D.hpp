@@ -2,14 +2,14 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <windowsx.h>
 
 #include <D3D11.h>
 #include <D3DX11.h>
 
-#include <dinput.h>
-
 #include <DirectXMath.h>
 
+#include <functional>
 #include <string>
 #include <vector>
 

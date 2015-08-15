@@ -1,20 +1,20 @@
 #include "MouseControls.hpp"
-#include "GameApplication.hpp"
 
 namespace EDEN3D {
 
-	MouseControls::MouseControls(const GameWindow& window) {
+	MouseControls::MouseControls(GameApplication& app, const GameWindow& window, const MouseHandler& callback) {
 
-		mouse = NULL;
+		handler = [=] (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
-		GameApplication::directInput->CreateDevice(GUID_SysMouse, &mouse, NULL);
-		mouse->SetCooperativeLevel(window.getHandle(), DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
-		mouse->SetDataFormat(&c_dfDIMouse);
-		mouse->Acquire();
-	}
+			switch (message) {
+				case WM_MOUSEMOVE:
+					long x = GET_X_LPARAM(lParam);
+					long y = GET_Y_LPARAM(lParam);
+					callback(x, y);
+					break;
+			}
+		};
 
-	MouseControls::~MouseControls() {
-
-		mouse->Release();
+		app.addControlHandler(&handler);
 	}
 }

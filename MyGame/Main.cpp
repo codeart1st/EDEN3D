@@ -4,6 +4,7 @@
 #include <WavefrontLoader.hpp>
 #include <MouseControls.hpp>
 
+#include <sstream>
 #include <thread>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
@@ -18,21 +19,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		EDEN3D::Color(0.15f, 0.15f, 0.15f, 1.0f)
 	});
 
-	EDEN3D::MouseControls controls(window);
-
 	EDEN3D::Mesh* mesh = NULL;
 	
 	thread load([&] {
 		// load the model asynchronous
 		EDEN3D::WavefrontLoader::load(L"Bunny.obj", &mesh);
 	});
+
+	EDEN3D::MouseControls controls(game, window, [&] (long x, long y) {
+		// TODO: handle mouse changes
+	});
 	
 	int exit = game.run([&] {
 		// game loop
-
-		/* controls.update([&] (int x, int y, int button) {
-		   });
-		*/
 		renderer.render(camera, mesh);
 	});
 
