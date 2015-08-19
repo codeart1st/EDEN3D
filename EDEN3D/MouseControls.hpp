@@ -9,7 +9,7 @@ namespace EDEN3D {
 	class EDEN3D_API MouseControls {
 
 	public:
-		typedef function<void (long&, long&)> MouseHandler;
+		typedef function<void (long&, long&, wstring&)> MouseHandler;
 
 		MouseControls(GameApplication&, const GameWindow&, const MouseHandler&);
 

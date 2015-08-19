@@ -12,7 +12,17 @@ namespace EDEN3D {
 		~PerspectiveCamera();
 
 		void render();
+
 		void position(float, float, float);
+		void rotation(float, float, float);
+
+		void rotateX(float);
+		void rotateY(float);
+		void rotateZ(float);
+
+		void translateX(float);
+		void translateY(float);
+		void translateZ(float);
 
 	protected:
 		ID3D11Buffer* pCBuffer;

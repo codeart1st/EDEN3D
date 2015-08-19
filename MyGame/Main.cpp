@@ -4,7 +4,6 @@
 #include <WavefrontLoader.hpp>
 #include <MouseControls.hpp>
 
-#include <sstream>
 #include <thread>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
@@ -26,8 +25,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		EDEN3D::WavefrontLoader::load(L"Bunny.obj", &mesh);
 	});
 
-	EDEN3D::MouseControls controls(game, window, [&] (long x, long y) {
-		// TODO: handle mouse changes
+	const float WIDTH_2  = window.getWidth() * 0.5;
+	const float HEIGHT_2 = window.getHeight() * 0.5;
+	const float ANGLE_RANGE = 45;
+
+	EDEN3D::MouseControls controls(game, window, [&] (long x, long y, wstring button) {
+
+		float xRot, yRot;
+
+		xRot = (y - HEIGHT_2) / HEIGHT_2 * ANGLE_RANGE;
+		yRot = (x - WIDTH_2) / WIDTH_2 * ANGLE_RANGE;
+
+		camera.rotation(XMConvertToRadians(xRot), XMConvertToRadians(yRot), 0);
 	});
 	
 	int exit = game.run([&] {
